@@ -71,9 +71,9 @@ export default class Home extends Vue {
 .home{
     .topbar{
         height: 40px;
-        background-color: #f9f9f9;
+        background-color: grey;
         line-height: 40px;
-        color: #646464;
+        color: white;
         font-size: 14px;
     }
     .search{
