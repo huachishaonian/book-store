@@ -1,8 +1,5 @@
 <template>
     <div class="bookList">
-        <div class="top-bar">
-            hhh
-        </div>
         <i-card v-for="(item, index) in bookData" :key="index" class="book">
             <i-row>
                 <i-col span="6">
@@ -46,13 +43,6 @@ export default class BookList extends Vue {
 </script>
 <style lang="scss" scoped>
 .bookList{
-    .top-bar{
-        height: 60px;
-        background-color: #f9f9f9;
-        line-height: 60px;
-        color: #646464;
-        font-size: 18px;
-    }
     .book{
         height: 160px;
         width: 60%;

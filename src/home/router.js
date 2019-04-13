@@ -6,7 +6,20 @@ export default {
         {
             name: 'Home',
             path: 'home',
-            component: () => import(/* webpackChunkName: "account" */ '@/home/views/home.vue'),
+            component: () => import(/* webpackChunkName: "home" */ '@/home/views/home.vue'),
+            redirect: { name: 'main' },
+            children: [
+                {
+                    name: 'main',
+                    path: 'main',
+                    component: () => import(/* webpackChunkName: "home" */ '@/main/views/main.vue'),
+                },
+                {
+                    name: 'bookList',
+                    path: 'bookList',
+                    component: () => import(/* webpackChunkName: "home" */ '@/bookList/views/book-list.vue'),
+                },
+            ]
         },
     ],
 };
