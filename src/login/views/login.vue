@@ -11,7 +11,7 @@
                             <i-input v-model="formValidate.password" type="password"  />
                         </i-form-item>
                         <i-form-item>
-                            <i-button type="primary">登录</i-button>
+                            <i-button type="primary" @click="login('validate')">登录</i-button>
                         </i-form-item>
                     </i-form>
                 </i-tab-pane>
@@ -21,11 +21,14 @@
                             <div>
                                 <span style="color:red">*</span>头像
                             </div>
-                            <i-upload>
+                            <i-upload :before-upload="beforeUpload" action="''">
                                 <div style="width: 58px;height:58px;line-height: 58px;cursor: pointer;border: 1px dashed">
                                     <Icon type="ios-camera" size="20"></Icon>
                                 </div>
                             </i-upload>
+                            <i-tag v-if="uploadFile.name" color="blue" closable @on-close="deleteFile">
+                                {{ uploadFile.name }}
+                            </i-tag>
                         </i-form-item>
                         <i-form-item label="用户名" prop="name">
                             <i-input v-model="regformValidate.name" />
@@ -34,7 +37,7 @@
                             <i-input v-model="regformValidate.password" type="password"  />
                         </i-form-item>
                         <i-form-item>
-                            <i-button type="primary">注册</i-button>
+                            <i-button type="primary" @click="register('regvalidate')">注册</i-button>
                         </i-form-item>
                     </i-form>
                 </i-tab-pane>
@@ -45,9 +48,11 @@
 <script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import loginAPI from '@/login/api/api';
 @Component()
 
 export default class Login extends Vue {
+    uploadFile = {}
     formValidate = {
         name: '',
         password: '',
@@ -87,6 +92,36 @@ export default class Login extends Vue {
                 message: '请输入密码'
             },
         ],
+    }
+    login(name) {
+        this.$refs[name].validate((valid) => {
+            if (valid) {
+                loginAPI.login().then().catch();
+            } else {
+                this.$Message.error('请输入用户名和密码!');
+            }
+        });
+    }
+    register(name) {
+        this.$refs[name].validate((valid) => {
+            if (valid) {
+                loginAPI.register().then().catch();
+            } else {
+                this.$Message.error('请输入用户名和密码!');
+            }
+        });
+    }
+    beforeUpload(file) {
+        // if (!file.name.endsWith('jpg')) {
+        //     this.$Message.warning('请上传jpg格式的图片!');
+        //     return false;
+        // }
+        this.uploadFile = file;
+        console.log(file);
+        return false;
+    }
+    deleteFile() {
+        this.uploadFile = {};
     }
 }
 </script>
