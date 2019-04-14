@@ -112,9 +112,12 @@ export default class Login extends Vue {
         ],
     }
     login(name) {
+        let data = new FormData();
+        data.append('username', this.formValidate.username);
+        data.append('password', this.formValidate.password);
         this.$refs[name].validate((valid) => {
             if (valid) {
-                loginAPI.login(this.formValidate).then((res) => {
+                loginAPI.login(data).then((res) => {
                     this.$Message.success('登录成功!');
                     this.$router.push({ name: 'main' });
                 }).catch((err) => {
