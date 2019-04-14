@@ -13,11 +13,14 @@
                             <i-icon type="ios-arrow-down"></i-icon>
                         </a>
                     <i-dropdown-menu slot="list">
-                        <i-dropdown-item>
+                        <i-dropdown-item v-if="!isRoot">
                             购物车
                         </i-dropdown-item>
-                        <i-dropdown-item>
+                        <i-dropdown-item v-if="!isRoot">
                             我的订单
+                        </i-dropdown-item> 
+                        <i-dropdown-item v-if="isRoot">
+                            图书管理
                         </i-dropdown-item> 
                         <i-dropdown-item @click.native="logOut">
                             退出
@@ -34,20 +37,32 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import loginAPI from '@/login/api/api';
-@Component()
+@Component({
+    computed: {
+        isLogin() {
+            return this.$store.state.username;
+        },
+        isRoot() {
+            return this.$store.state.root;
+        },
+    },
+})
 
 export default class Home extends Vue {
-    isLogin = ''
+    // isLogin = ''
+    // isRoot = false
     login() {
         this.$router.push({ name: 'login' });
     }
     created() {
         this.isLogin = this.$store.state.username;
+        this.isRoot = this.$store.state.isRoot;
     }
     logOut() {
         loginAPI.logOut().then(() => {
             this.$store.commit('clearUserName');
-            this.isLogin = '';
+            // this.isLogin = '';
+            // this.isRoot = false;
             this.$router.push({name: 'main'});
         }).catch(() => {
             this.$Message.error('退出失败!');
