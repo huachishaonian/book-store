@@ -2,14 +2,6 @@
     <div class="main">
         <div class="search">
             <i-input search enter-button placeholder="请输入要搜索的图书" />
-            <div class="hot">
-                <span>
-                    热搜:
-                </span>
-                <span v-for="(item, index) in hot" :key="index">
-                    {{ item }}
-                </span>
-            </div>
         </div>
         <i-row class="content">
             <i-col span="6">
