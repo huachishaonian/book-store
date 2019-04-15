@@ -43,22 +43,20 @@ import loginAPI from '@/login/api/api';
             return this.$store.state.username;
         },
         isRoot() {
-            return this.$store.state.root;
-        },
-    },
+            return this.$store.state.isRoot;
+        }
+    }
 })
 
 export default class Home extends Vue {
     login() {
         this.$router.push({ name: 'login' });
     }
-    created() {
-        this.isLogin = this.$store.state.username;
-        this.isRoot = this.$store.state.isRoot;
-    }
     logOut() {
         loginAPI.logOut().then(() => {
             this.$store.commit('clearUserName');
+        }).then(() => {
+            this.$Message.success('退出成功!');
         }).catch(() => {
             this.$Message.error('退出失败!');
         });
