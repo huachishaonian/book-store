@@ -119,9 +119,9 @@ export default class Login extends Vue {
             if (valid) {
                 loginAPI.login(data).then((res) => {
                     this.$Message.success('登录成功!');
-                    this.$store.commit('setUserName', res.data.username, res.data.isRoot);
+                    this.$store.commit('setUserName', res.data.username);
+                    this.$store.commit('setisRoot', res.data.isRoot);
                     this.$router.push({ name: 'main' });
-                    console.log(this.$store.state.username);
                 }).catch((err) => {
                     this.$Message.error('登录失败!');
                 });

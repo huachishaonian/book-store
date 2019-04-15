@@ -9,8 +9,10 @@ export default new Vuex.Store({
     isRoot: false,
   },
   mutations: {
-    setUserName (state, username, isRoot) {
+    setUserName (state, username) {
       state.username = username;
+    },
+    setRoot (state, isRoot) {
       state.isRoot = isRoot;
     },
     clearUserName (state) {
