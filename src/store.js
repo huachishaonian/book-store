@@ -15,7 +15,7 @@ export default new Vuex.Store({
     },
     clearUserName (state) {
       state.username = '';
-      // state.isRoot = false;
+      state.isRoot = false;
     },
   },
   actions: {
