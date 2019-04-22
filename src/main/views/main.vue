@@ -5,34 +5,55 @@
         </div>
         <i-row class="content">
             <i-col span="6">
-                猜你喜欢
+                <span class="top">猜你喜欢</span>
+                <i-row  v-for="item in favor" :key="item.bookid">
+                    <i-tooltip>
+                        <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.bookname }}</i-card>
+                        <div slot="content">
+                            <img :src="require(`@/static/image/${item.avatar}`)" />
+                        </div>       
+                    </i-tooltip>
+                </i-row>
             </i-col>
             <i-col span="12" class="carousel">
+                <i-row style="margin-bottom: 20px">
+                    <i-col v-for="item in typeList" :key="item.typeid" span="4">
+                        <span style="color: #2d8cf0; font-size:16px; cursor: pointer">{{ item.typename }}</span>
+                    </i-col>
+                </i-row>
                 <i-carousel autoplay loop>
                     <i-carousel-item>
-                        <div style="width:100%;height:400px;background-color:black;color:#fff">
-                            图片展示1
+                        <div style="width:750px;height:315px;background-color:black;color:#fff">
+                            <img src="@/static/pic/1.jpg" alt="加载失败">
                         </div>
                     </i-carousel-item>
                     <i-carousel-item>
-                        <div style="width:100%;height:400px;background-color:black;color:#fff">
-                            图片展示2
+                        <div style="width:750px;height:315px;background-color:black;color:#fff">
+                            <img src="@/static/pic/2.jpg" alt="加载失败">
                         </div>
                     </i-carousel-item>
                     <i-carousel-item>
-                        <div style="width:100%;height:400px;background-color:black;color:#fff">
-                            图片展示3
+                        <div style="width:750px;height:315px;background-color:black;color:#fff">
+                            <img src="@/static/pic/3.jpg" alt="加载失败">
                         </div>
                     </i-carousel-item>
                     <i-carousel-item>
-                        <div style="width:100%;height:400px;background-color:black;color:#fff">
-                            图片展示4
+                        <div style="width:750px;height:315px;background-color:black;color:#fff">
+                            <img src="@/static/pic/4.jpg" alt="加载失败">
                         </div>
                     </i-carousel-item>
                 </i-carousel>
             </i-col>
             <i-col span="6">
-                排行榜
+                <span class="top">排行榜</span>
+                <i-row  v-for="item in topList" :key="item.bookid">
+                    <i-tooltip>
+                        <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.bookname }}</i-card>
+                        <div slot="content">
+                            <img :src="require(`@/static/image/${item.avatar}`)" />
+                        </div>       
+                    </i-tooltip>
+                </i-row>
             </i-col>
         </i-row>
     </div>
@@ -40,9 +61,40 @@
 <script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
-@Component()
+import mainAPI from '@/main/api/api';
+@Component({
+})
 
 export default class Main extends Vue {
+    favor = []
+    topList = []
+    typeList = []
+    created() {
+        this.getFavor();
+        this.getTopList();
+        this.type();
+    }
+    getFavor() {
+        let data = new FormData();
+        if (this.$store.state.username !== '' && !this.$store.state.isRoot) {
+            data.append('username', this.$store.state.username);
+        }
+        mainAPI.favor(data).then((res) => {
+            this.favor = res.data;
+        }).catch((err) => {
+            this.$Message.error('数据错误');
+        });
+    }
+    getTopList() {
+        mainAPI.topList().then((res) => {
+            this.topList = res.data;
+        }).catch();
+    }
+    type() {
+        mainAPI.type().then((res) => {
+            this.typeList = res.data;
+        }).catch();
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -59,6 +111,10 @@ export default class Main extends Vue {
     }
     .content{
         margin-top: 40px;
+    }
+    .top{
+        font-size: 18px;
+        font-weight: 600;
     }
 }
 </style>
