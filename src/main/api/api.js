@@ -10,4 +10,7 @@ export default {
     type () {
         return request.get('http://localhost:8081/book/querybooktype');
     },
+    bookList(params) {
+        return request.post('http://localhost:8081/book/querybookbyname', params);
+    },
 }

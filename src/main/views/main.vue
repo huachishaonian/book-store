@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="search">
-            <i-input search enter-button placeholder="请输入要搜索的图书" />
+            <i-input v-model="bookName" search enter-button placeholder="请输入要搜索的图书" @on-search="search" />
         </div>
         <i-row class="content">
             <i-col span="6">
@@ -18,7 +18,7 @@
             <i-col span="12" class="carousel">
                 <i-row style="margin-bottom: 20px">
                     <i-col v-for="item in typeList" :key="item.typeid" span="4">
-                        <span style="color: #2d8cf0; font-size:16px; cursor: pointer">{{ item.typename }}</span>
+                        <span style="color: #2d8cf0; font-size:16px; cursor: pointer" @click="sreachByType(item.typeid)">{{ item.typename }}</span>
                     </i-col>
                 </i-row>
                 <i-carousel autoplay loop>
@@ -45,7 +45,7 @@
                 </i-carousel>
             </i-col>
             <i-col span="6">
-                <span class="top">排行榜</span>
+                <span class="top">图书榜单</span>
                 <i-row  v-for="item in topList" :key="item.bookid">
                     <i-tooltip>
                         <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.bookname }}</i-card>
@@ -63,12 +63,26 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import mainAPI from '@/main/api/api';
 @Component({
+    computed: {
+        isLogin() {
+            return this.$store.state.username;
+        }
+    },
+    watch: {
+        isLogin(newVal, oldVal) {
+            if (newVal === '') {
+                this.getFavor();
+                this.getTopList();
+            }
+        } ,
+    },
 })
 
 export default class Main extends Vue {
     favor = []
     topList = []
     typeList = []
+    bookName = ''
     created() {
         this.getFavor();
         this.getTopList();
@@ -94,6 +108,16 @@ export default class Main extends Vue {
         mainAPI.type().then((res) => {
             this.typeList = res.data;
         }).catch();
+    }
+    search(value) {
+        if (value === '') {
+            this.$Message.warning('请输入搜索内容!');
+            return;
+        }
+        this.$router.push({ name: 'bookList', params: { bookName: value, type: 'name' } });
+    }
+    sreachByType(value) {
+        this.$router.push({ name: 'bookList', params: { bookName: value, type: 'type' } });
     }
 }
 </script>

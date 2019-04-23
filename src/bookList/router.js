@@ -5,7 +5,8 @@ export default {
     children: [
         {
             name: 'bookList',
-            path: 'BookList',
+            props: true,
+            path: 'bookList/:bookName',
             component: () => import(/* webpackChunkName: "login" */ '@/bookList/views/book-list.vue'),
         },
     ],

@@ -2,22 +2,20 @@
     <div class="bookList">
         <i-card v-for="(item, index) in bookData" :key="index" class="book">
             <i-row>
-                <i-col span="6">
-                    图片占位
+                <i-col span="8">
+                    <img :src="require(`@/static/image/${item.avatar}`)" alt="图片加载失败" style="width: 100px;height:100px">
                 </i-col>
-                <i-col span="18" class="bookmsg">
+                <i-col span="16" class="bookmsg">
                     <div class="name">
-                        《{{ item.name }}》
+                        《{{ item.bookname }}》
                     </div>
                     <div class="price">
                         ¥{{ item.price }}
                     </div>
                     <div class="author">
                         作者:<span>{{ item.author }} </span>
-                        出版社:<span>{{ item.from }}</span>
-                    </div>
-                    <div class="detail">
-                        {{ item.detail }}
+                        出版时间:<span>{{ item.publicationtime }}</span>
+                        浏览量:<span>{{ item.glance }}</span>
                     </div>
                 </i-col>
             </i-row>
@@ -27,27 +25,49 @@
 <script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
-@Component()
+import bookAPI from '@/bookList/api/api';
+@Component({
+    props: {
+        bookName: {
+            type: String,
+            default: ''
+        },
+        type: {
+            type: String,
+            default: ''
+        },
+    },
+})
 
 export default class BookList extends Vue {
-    bookData = [
-        {
-            name: '计算机网络',
-            price: '100',
-            author: '王字鹏',
-            from: '长江文艺出版社',
-            detail: '书很牛逼很牛逼很牛逼很牛逼很牛逼很牛逼很牛逼很牛逼很牛逼很牛逼很牛逼很牛逼'
+    created() {
+        this.getBookList();
+    }
+    bookData = []
+    getBookList() {
+        let data = new FormData();
+        if (this.type === 'name') {
+            data.append('bookName', this.bookName);
+            bookAPI.bookList(data).then((res) => {
+                this.bookData = res.data;
+            }).catch();
+        } else {
+            data.append('typeId', this.bookName);
+            bookAPI.bookListByType(data).then((res) => {
+                this.bookData = res.data;
+            }).catch();
         }
-    ]
+    }
 }
 </script>
 <style lang="scss" scoped>
 .bookList{
     .book{
-        height: 160px;
+        height: 140px;
         width: 60%;
         margin-left: 20%;
         margin-top: 20px;
+        cursor: pointer;
         .bookmsg{
             text-align: left;
             .name{

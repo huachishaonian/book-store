@@ -16,7 +16,8 @@ export default {
                 },
                 {
                     name: 'bookList',
-                    path: 'bookList',
+                    props: true,
+                    path: 'bookList/:bookName/:type',
                     component: () => import(/* webpackChunkName: "home" */ '@/bookList/views/book-list.vue'),
                 },
             ]
