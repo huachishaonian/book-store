@@ -13,13 +13,13 @@
                             <i-icon type="ios-arrow-down"></i-icon>
                         </a>
                     <i-dropdown-menu slot="list">
-                        <i-dropdown-item v-if="!isRoot">
+                        <i-dropdown-item v-if="!isRoot" @click.native="jump('cart')">
                             购物车
                         </i-dropdown-item>
-                        <i-dropdown-item v-if="!isRoot">
+                        <i-dropdown-item v-if="!isRoot" @click.native="jump('order')">
                             我的订单
                         </i-dropdown-item> 
-                        <i-dropdown-item v-if="isRoot">
+                        <i-dropdown-item v-if="isRoot" @click.native="jump('manage')">
                             图书管理
                         </i-dropdown-item> 
                         <i-dropdown-item @click.native="logOut">
@@ -60,6 +60,9 @@ export default class Home extends Vue {
         }).catch(() => {
             this.$Message.error('退出失败!');
         });
+    }
+    jump(value) {
+        this.$router.push({ name: value });
     }
 }
 </script>

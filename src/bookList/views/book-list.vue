@@ -1,6 +1,6 @@
 <template>
     <div class="bookList">
-        <i-card v-for="(item, index) in bookData" :key="index" class="book">
+        <i-card v-for="(item, index) in bookData" :key="index" class="book" @click.native="toDetail(item.bookid)">
             <i-row>
                 <i-col span="8">
                     <img :src="require(`@/static/image/${item.avatar}`)" alt="图片加载失败" style="width: 100px;height:100px">
@@ -57,6 +57,9 @@ export default class BookList extends Vue {
                 this.bookData = res.data;
             }).catch();
         }
+    }
+    toDetail(id) {
+        this.$router.push({ name: 'bookDetail', params: { bookId: id}});
     }
 }
 </script>

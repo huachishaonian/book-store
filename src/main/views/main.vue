@@ -8,7 +8,7 @@
                 <span class="top">猜你喜欢</span>
                 <i-row  v-for="item in favor" :key="item.bookid">
                     <i-tooltip>
-                        <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.bookname }}</i-card>
+                        <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap" @click.native="toDetail(item.bookid)">{{ item.bookname }}</i-card>
                         <div slot="content">
                             <img :src="require(`@/static/image/${item.avatar}`)" />
                         </div>       
@@ -48,7 +48,7 @@
                 <span class="top">图书榜单</span>
                 <i-row  v-for="item in topList" :key="item.bookid">
                     <i-tooltip>
-                        <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.bookname }}</i-card>
+                        <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap" @click.native="toDetail(item.bookid)">{{ item.bookname }}</i-card>
                         <div slot="content">
                             <img :src="require(`@/static/image/${item.avatar}`)" />
                         </div>       
@@ -118,6 +118,9 @@ export default class Main extends Vue {
     }
     sreachByType(value) {
         this.$router.push({ name: 'bookList', params: { bookName: value, type: 'type' } });
+    }
+    toDetail(id) {
+        this.$router.push({ name: 'bookDetail', params: { bookId: id}});
     }
 }
 </script>
