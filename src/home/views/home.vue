@@ -3,7 +3,7 @@
         <div class="topbar">
             <i-row>
                 <i-col span="4">
-                    吴云明的书店
+                    <i>MyBooks</i>
                 </i-col>
                 <i-col span="8" offset="12">
                     <i-button v-if="isLogin === ''" @click="login">登录</i-button>
