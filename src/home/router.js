@@ -20,6 +20,12 @@ export default {
                     path: 'bookList/:bookName/:type',
                     component: () => import(/* webpackChunkName: "home" */ '@/bookList/views/book-list.vue'),
                 },
+                {
+                    name: 'bookDetail',
+                    props: true,
+                    path: 'bookDetail/:bookId',
+                    component: () => import(/* webpackChunkName: "home" */ '@/home/views/book-detail.vue'),
+                },
             ]
         },
     ],
