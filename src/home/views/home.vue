@@ -3,7 +3,7 @@
         <div class="topbar">
             <i-row>
                 <i-col span="4">
-                    <i>MyBooks</i>
+                    <i v-on:click="resMain">MyBooks</i>
                 </i-col>
                 <i-col span="8" offset="12">
                     <i-button v-if="isLogin === ''" @click="login">登录</i-button>
@@ -63,6 +63,9 @@ export default class Home extends Vue {
     }
     jump(value) {
         this.$router.push({ name: value });
+    }
+    resMain() {
+         this.$router.push({ name: 'main' });
     }
 }
 </script>
