@@ -13,4 +13,16 @@ export default {
     addCart(params) {
         return request.post('http://localhost:8081/order/addcart', params);
     },
+    getOrder(params) {
+        return request.post('http://localhost:8081/order/querybyname', params);
+    },
+    searchOrder(params) {
+        return request.post('http://localhost:8081/order/querybyid', params);
+    },
+    deleteOrder(params) {
+        return request.delete('http://localhost:8081/order/delorder', { data: params });
+    },
+    comBook(params) {
+        return request.post('http://localhost:8081/book/evaluatebook', params);
+    },
 }
