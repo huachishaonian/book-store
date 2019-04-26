@@ -55,6 +55,7 @@ export default class Home extends Vue {
     logOut() {
         loginAPI.logOut().then(() => {
             this.$store.commit('clearUserName');
+            this.$router.push({ name: 'main' });
         }).then(() => {
             this.$Message.success('退出成功!');
         }).catch(() => {

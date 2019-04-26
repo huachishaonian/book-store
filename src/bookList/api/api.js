@@ -25,4 +25,7 @@ export default {
     comBook(params) {
         return request.post('http://localhost:8081/book/evaluatebook', params);
     },
+    manageBook () {
+        return request.get('http://localhost:8081/book/adminmangebook');
+    },
 }

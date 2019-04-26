@@ -57,7 +57,7 @@ export default class Order extends Vue {
             tooltip: true
         },
         {
-            title: '单价',
+            title: '¥ 单价',
             key: 'price'
         },
         {
@@ -65,7 +65,7 @@ export default class Order extends Vue {
             key: 'quantity'
         },
         {
-            title: '总价',
+            title: '¥ 总价',
             key: 'amount'
         },
         {
@@ -98,7 +98,11 @@ export default class Order extends Vue {
         let data = new FormData();
         data.append('orderId', this.orderId);
         bookAPI.searchOrder(data).then((res) => {
-            this.orderData = res.data;
+            if(res.data.orderId == null) {
+                this.$Message.error('请输入正确的订单号!');
+            } else {
+                this.orderData = res.data;
+            }
         }).catch();
     }
     deleteOrder(id) {
@@ -108,7 +112,7 @@ export default class Order extends Vue {
             this.$Message.success('删除成功!');
             this.getOrder();
         }).catch((err) => {
-            this.$Message.success('删除失败!');
+            this.$Message.error('删除失败!');
         });
     }
     commit(value) {

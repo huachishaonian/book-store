@@ -8,7 +8,7 @@
                 <span class="top">猜你喜欢</span>
                 <i-row  v-for="item in favor" :key="item.bookid">
                     <i-tooltip>
-                        <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap" @click.native="toDetail(item.bookid)">{{ item.bookname }}</i-card>
+                        <i-card style="cursor: pointer; margin-top: 0px; width: 200px; overflow: hidden;text-overflow:ellipsis;white-space:nowrap;font-size:6px" @click.native="toDetail(item.bookid)">{{ item.bookname }}</i-card>
                         <div slot="content">
                             <img :src="require(`@/static/image/${item.avatar}`)" />
                         </div>       
@@ -43,12 +43,17 @@
                         </div>
                     </i-carousel-item>
                 </i-carousel>
+                 <i-row style="margin-bottom: 20px">
+                    <i-col style=" margin-top: 60px;">
+                        <span ><B>Copyright <i>MyBooks</i>  By Wym , All Rights Reserved<img src="@/static/pic/validate.gif" alt="加载失败">京ICP证 1504010321号 出版物经营许可证 , in 2019</B></span>
+                    </i-col>
+                </i-row>
             </i-col>
             <i-col span="6">
                 <span class="top">图书榜单</span>
                 <i-row  v-for="item in topList" :key="item.bookid">
                     <i-tooltip>
-                        <i-card style="cursor: pointer; margin-top: 10px; width: 200px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap" @click.native="toDetail(item.bookid)">{{ item.bookname }}</i-card>
+                        <i-card style="font-size:6px;cursor: pointer; width: 200px;  overflow: hidden;text-overflow:ellipsis;white-space:nowrap;" @click.native="toDetail(item.bookid)">{{ item.bookname }}</i-card>
                         <div slot="content">
                             <img :src="require(`@/static/image/${item.avatar}`)" />
                         </div>       
